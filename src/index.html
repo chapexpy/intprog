@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src = "/socket.io/socket.io.js"></script>
+   
+   <script>
+      let socket = io();
+
+      function buttonClicked(){
+        const Http = new XMLHttpRequest();
+        const url='https://jsonplaceholder.typicode.com/posts/2';
+
+        Http.open("GET", url);
+        Http.send();
+        
+        Http.onreadystatechange = (e) => {
+
+            socket.emit('clicked', JSON.parse(Http.responseText));
+
+            document.getElementById("content").innerHTML += `${JSON.parse(Http.responseText).title}<br>`;
+        }
+	}
+    
+   </script>
+</head>
+<body>
+    <div>
+        <button id="btn" onclick="buttonClicked()">submit</button>
+        <div id="content">Content<br></div>
+    </div>  
+</body>
+</html>
