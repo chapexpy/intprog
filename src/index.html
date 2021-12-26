@@ -20,8 +20,11 @@
         Http.onreadystatechange = (e) => {
 
             socket.emit('clicked', JSON.parse(Http.responseText));
-
-            document.getElementById("content").innerHTML += `${JSON.parse(Http.responseText).title}<br>`;
+            socket.on('update',(data) =>{
+                document.getElementById("content").innerHTML += `update<br>`;
+                document.getElementById("content").innerHTML += `${data.rates.GBP}<br>`;
+            })
+            
         }
 	}
     
