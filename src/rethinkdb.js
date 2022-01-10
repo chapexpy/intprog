@@ -1,11 +1,12 @@
 r = require('rethinkdb');   
-var connection = null;
-r.connect( {host: 'localhost', port: 28015}, function(err, conn) {
-    if (err) throw err;
-    connection = conn;
-})
+(async () => {
+    try {
+        const connection = await r.connect( {host: 'localhost', port: 28015}) 
+        
+        const table = await r.db('test').tableCreate('contact_forms').run(connection)
+        
+    } catch (error) {
+        console.log(error)
+    }
 
-r.db('test').tableCreate('contact_forms').run(connection, function(err, result) {
-    if (err) throw err;
-    console.log(JSON.stringify(result, null, 2));
-})
+})()

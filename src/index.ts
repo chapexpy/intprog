@@ -4,19 +4,15 @@ import * as path from 'path'
 import { Server } from 'socket.io'
 import * as axios from 'axios'
 import * as bodyParser from 'body-parser'
+import * as r from 'rethinkdb'
+import _, { map } from 'underscore'
 // require('dotenv').config();
-const method: axios.Method = 'GET'
-const options = {
-  method,
-  url: 'https://covid-19-data.p.rapidapi.com/country/code',
-  params: { code: 'it' },
-  headers: {
-    'x-rapidapi-host': 'covid-19-data.p.rapidapi.com',
-    'x-rapidapi-key': '673d338e87msh89fc3788b48c076p12ec3djsnbac8f4d30272'
-  }
-};
 
 (() => {
+  const method: axios.Method = 'GET'
+  // Rapid API host - key
+  const xRapidApiHost = null
+  const xRapidApiKey = null
   const app = express()
   const httpServer = http.createServer(app)
   const io = new Server(httpServer)
@@ -24,11 +20,29 @@ const options = {
   app.use(bodyParser.urlencoded({
     extended: false
   }))
+
   app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'))
   })
-  app.post('/contact-form', (req, res) => {
-    console.log(req.body)
+
+  app.post('/contact-form', async (req, res) => {
+    try {
+      const { body } = req
+      const connection = await r.connect({ host: 'localhost', port: 28015 })
+      if (!_.isNull('contact_forms') && _.isString('contact_forms') && !_.isNull(connection)) {
+        r.tableList().run(connection).then((tableNames) => {
+          if (_.includes(tableNames, 'contact_forms')) {
+            return r.tableCreate('contact_forms').run(connection)
+          }
+          return null
+        })
+      }
+      const table = await r.db('test').table('contact_forms').insert(body).run(connection)
+      res.status(200).json('Form submitted.')
+    } catch (error) {
+      console.log(error)
+      res.status(500).json('Internal Server Error.')
+    }
   })
 
   io.on('connection', (socket) => {
@@ -43,8 +57,8 @@ const options = {
           url: 'https://covid-19-data.p.rapidapi.com/country/code',
           params: { code: element },
           headers: {
-            'x-rapidapi-host': 'covid-19-data.p.rapidapi.com',
-            'x-rapidapi-key': '673d338e87msh89fc3788b48c076p12ec3djsnbac8f4d30272'
+            'x-rapidapi-host': xRapidApiHost,
+            'x-rapidapi-key': xRapidApiKey
           }
         }).then((response) => {
           data.push(response.data.body)
