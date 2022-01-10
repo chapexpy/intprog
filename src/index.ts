@@ -29,7 +29,6 @@ const options = {
   })
   app.post('/contact-form', (req, res) => {
     console.log(req.body)
-    
   })
 
   io.on('connection', (socket) => {
