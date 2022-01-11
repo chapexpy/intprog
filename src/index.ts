@@ -9,10 +9,11 @@ import _, { map } from 'underscore'
 // require('dotenv').config();
 
 (() => {
+  // Express server ayağa kaldırılması ve Socket bind -Enes Şen
   const method: axios.Method = 'GET'
   // Rapid API host - key
-  const xRapidApiHost = null
-  const xRapidApiKey = null
+  const xRapidApiHost = 'covid-19-data.p.rapidapi.com'
+  const xRapidApiKey = '673d338e87msh89fc3788b48c076p12ec3djsnbac8f4d30272'
   const app = express()
   const httpServer = http.createServer(app)
   const io = new Server(httpServer)
@@ -52,6 +53,7 @@ import _, { map } from 'underscore'
       const data = []
 
       values.forEach((element) => {
+        // RapidAPI'ya atılacak isteğin oluşturulması -Şule Fidanol
         axios.default.request({
           method,
           url: 'https://covid-19-data.p.rapidapi.com/country/code',

@@ -14,13 +14,15 @@
     <link rel="stylesheet" href="css/templatemo-upright.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-
+    <!-- Genel sayfa düzenlenmesi ve içerikler -Umut Karayılan*, Emre Avcu*, Berk Kumaş*, Emre Çıtak, Şule Fidanol-->
+    <!-- * Fontlar, görseller, css-->
 </head>
 
 <body>
 
     <div class="container-fluid">
         <div class="row">
+            <!-- Sidebar Düzenlemesi -Emre Çıtak, Berk Kumaş-->
             <!-- Leftside bar -->
             <div id="tm-sidebar" class="tm-sidebar">
                 <nav class="tm-nav">
@@ -68,13 +70,11 @@
                             </li>
                         </ul>
                     </div>
-                    <!-- <footer class="mb-3 tm-mt-100">
-                        Design: <a href="" target="_parent" rel="sponsored">Footer</a>
-                    </footer>-->
                 </nav>
             </div>
 
             <div class="tm-main">
+
                 <!-- Home section -->
                 <div class="tm-section-wrap">
                     <div class="tm-parallax" data-parallax="scroll" data-image-src="img/img-01.jpg"></div>
@@ -166,13 +166,14 @@
                     <section id="chart" class="tm-section">
                         <h2 class="tm-text-primary">Koronavirüs Verileri</h2>
                         <hr class="mb-5">
+                        <!-- Chart.js ile çizilecek grafiğin HTML'e eklenmesi -Şule Fidanol-->
                         <canvas id="myChart" width="200" height="200"></canvas>
                         <form class="form-horizontal" id="countryForm">
                             <fieldset>
 
                                 <!-- Form Name -->
                                 <legend>Ülke Kodları</legend>
-
+                                <!-- Oluşturulacak chart için ülke kodlarını alan formun oluşturulması -Emre Çıtak-->
                                 <!-- Text input-->
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="textinput1">Ülke 1</label>
@@ -214,6 +215,7 @@
                             </fieldset>
                         </form>
                         <script>
+                            //HTML sayfasına socket eklenerek veri alışverişi sağlanması -Enes Şen
                             const socket = io();
                             function formSubmit(){
                                 let values = []
@@ -227,8 +229,9 @@
                                 let deathData = []
                                 data.forEach(element => {
                                     labels.push(element.country)
-                                    deathData.push(element.provinces[0].deaths)
+                                    deathData.push(element.deaths)
                                 });
+                                //Chart.js ile gelen verileri kullanarak grafik çizilmesi -Şule Fidanol, Enes Şen
                                 const ctx = document.getElementById('myChart');
                                 const myChart = new Chart(ctx, {
                                 type: 'bar',
@@ -579,18 +582,11 @@
                                     üniversitedir.Gelişim Eğitim, Kültür, Sağlık ve Sosyal Hizmet Vakfı, 2008 yılında
                                     "İstanbul Gelişim Meslek Yüksekokulu" adı altında
                                     bir meslek okulu kurulması yönünde adımlar attı.
-                                    <!-- <p class="mb-4">
-                                    Aliquam ornare varius erat vel aliquet. Proin ac neque a tortor tristique semper eget eget sapien. Morbi vitae diam a odio lobortis mattis sed nec justo. 
-                                </p>
-                                <p class="mb-4">
-                                    Suspendisse sagittis tortor vel turpis aliquet, vitae molestie erat luctus.
-                                </p>-->
+                                   
                             </div>
                             <div class="tm-col-about tm-col-about-r">
                                 <img src="img/gelisim.jpg" alt="Image" class="img-fluid mb-5 tm-img-about">
-                                <!--<p>
-                                    Duis fringilla eget purus luctus sodales. Sed auctor odio quis ligula dignissim efficitur vitae vitae quam.
-                                </p>-->
+                                
                             </div>
                         </div>
                         <div class="mt-5">
@@ -706,78 +702,6 @@
                                     </div>
                                 </div>
 
-                                <!--   <div class="tm-carousel-item">
-                                    <figure class="effect-honey mb-4">
-                                        <img src="img/about-01.jpg" alt="Featured Item">
-                                        <figcaption>
-                                            <ul class="tm-social">
-                                                <li><a href="https://facebook.com" class="tm-social-link"><i class="fab fa-facebook"></i></a></li>
-                                                <li><a href="https://twitter.com" class="tm-social-link"><i class="fab fa-twitter"></i></a></li>
-                                                <li><a href="https://instagram.com" class="tm-social-link"><i class="fab fa-instagram"></i></a></li>
-                                            </ul>
-                                        </figcaption>
-                                    </figure>
-                                    <div class="tm-about-text">
-                                        <h3 class="mb-3 tm-text-primary tm-about-title">Calvin Third</h3>
-                                        <p>Aliquam efficitur, velit ut aliquet molestie, nulla dolor faucibus neque, quis hendrerit.</p>
-                                        <h4 class="tm-text-secondary tm-about-subtitle">Designer</h4>
-                                    </div>
-                                </div>
-                                
-                                <div class="tm-carousel-item">
-                                    <figure class="effect-honey mb-4">
-                                        <img src="img/about-02.jpg" alt="Featured Item">
-                                        <figcaption>
-                                            <ul class="tm-social">
-                                                <li><a href="https://facebook.com" class="tm-social-link"><i class="fab fa-facebook"></i></a></li>
-                                                <li><a href="https://twitter.com" class="tm-social-link"><i class="fab fa-twitter"></i></a></li>
-                                                <li><a href="https://instagram.com" class="tm-social-link"><i class="fab fa-instagram"></i></a></li>
-                                            </ul>
-                                        </figcaption>
-                                    </figure>
-                                    <div class="tm-about-text">
-                                        <h3 class="mb-3 tm-text-primary tm-about-title">Jenifer Third</h3>
-                                        <p>This is a carousel for a list of 10 team members. Each member image hover has 3 social icons.</p>
-                                        <h4 class="tm-text-secondary tm-about-subtitle">Program Director</h4>
-                                    </div>
-                                </div>
-
-                                <div class="tm-carousel-item">
-                                    <figure class="effect-honey mb-4">
-                                        <img src="img/about-03.jpg" alt="Featured Item">
-                                        <figcaption>
-                                            <ul class="tm-social">
-                                                <li><a href="https://facebook.com" class="tm-social-link"><i class="fab fa-facebook"></i></a></li>
-                                                <li><a href="https://twitter.com" class="tm-social-link"><i class="fab fa-twitter"></i></a></li>
-                                                <li><a href="https://instagram.com" class="tm-social-link"><i class="fab fa-instagram"></i></a></li>
-                                            </ul>
-                                        </figcaption>
-                                    </figure>
-                                    <div class="tm-about-text">
-                                        <h3 class="mb-3 tm-text-primary tm-about-title">David Three</h3>
-                                        <p>Aliquam efficitur, velit ut aliquet molestie, nulla dolor faucibus neque, quis hendrerit.</p>
-                                        <h4 class="tm-text-secondary tm-about-subtitle">Financial Assistant</h4>
-                                    </div>
-                                </div>
-
-                                <div class="tm-carousel-item">
-                                    <figure class="effect-honey mb-4">
-                                        <img src="img/about-01.jpg" alt="Featured Item">
-                                        <figcaption>
-                                            <ul class="tm-social">
-                                                <li><a href="https://facebook.com" class="tm-social-link"><i class="fab fa-facebook"></i></a></li>
-                                                <li><a href="https://twitter.com" class="tm-social-link"><i class="fab fa-twitter"></i></a></li>
-                                                <li><a href="https://instagram.com" class="tm-social-link"><i class="fab fa-instagram"></i></a></li>
-                                            </ul>
-                                        </figcaption>
-                                    </figure>
-                                    <div class="tm-about-text">
-                                        <h3 class="mb-3 tm-text-primary tm-about-title">Calvin Four</h3>
-                                        <p>Aliquam efficitur, velit ut aliquet molestie, nulla dolor faucibus neque, quis hendrerit.</p>
-                                        <h4 class="tm-text-secondary tm-about-subtitle">Media Partner</h4>
-                                    </div>
-                                </div>-->
-
                             </div>
                         </div>
                     </section>
@@ -791,6 +715,7 @@
                         <hr class="mb-5">
                         <div class="row">
                             <div class="col-xl-6 tm-contact-col-l mb-4">
+                                <!-- İletişim formu oluşturulması -Emre Çıtak, Form action ve method düzenlemeleri -Enes Şen-->
                                 <form id="contact-form" action="http://127.0.0.1:80/contact-form" method="POST" class="tm-contact-form">
                                     <div class="form-group">
                                         <input type="text" name="name" class="form-control rounded-0"
@@ -820,6 +745,7 @@
                             </div>
                             <div class="col-xl-6 tm-contact-col-r">
                                 <!-- Map -->
+                                <!-- İletişim, adres ve google maps konum bilgilerinin eklenmesi -Berk Kumaş-->
                                 <div class="mapouter mb-4">
                                     <div class="gmap_canvas">
                                         <iframe width="100%" height="520" id="gmap_canvas"
@@ -849,23 +775,13 @@
                                         </a>
                                     </li>
                                 </ul>
-                                <!-- <ul class="tm-contact-social">
-                                    <li><a href="https://fb.com/templatemo" class="tm-social-link"><i class="fab fa-facebook"></i></a></li>
-                                    <li><a href="https://twitter.com" class="tm-social-link"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a href="https://instagram.com" class="tm-social-link"><i class="fab fa-instagram"></i></a></li>
-                                    <li><a href="https://youtube.com" class="tm-social-link"><i class="fab fa-youtube"></i></a></li>-->
+                            
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Copyright -->
-                <!--<div class="tm-section-wrap tm-copyright row">
-                    <div class="col-12">
-                        <div class="text-right">
-                            Copyright 2020 Upright Company
-                        </div> -->
             </div>
         </div>
     </div> <!-- .tm-main -->
