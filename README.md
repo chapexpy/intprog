@@ -3,4 +3,4 @@
 
 # rethinkdb UI - localhost:8080
 
-# yarn dev
+# dev mod - yarn dev
